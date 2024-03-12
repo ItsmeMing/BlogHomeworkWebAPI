@@ -17,17 +17,21 @@ namespace BlogHomeworkWebAPI.Controllers
 
 			
 		[HttpGet()]
-		public async Task<ActionResult> Post_Getlist([FromQuery] string? post_id)
+		public async Task<ActionResult> Post_Getlist([FromQuery] string? post_id, [FromQuery] string? category_id)
 		{
 
 			var list = new List<Post>();
-			if (post_id == null)
+			if (post_id == null && category_id == null)
 			{
-				list = await _postServices.GetPosts(null);
+				list = await _postServices.GetPosts(null, null);
 			}
-			else
+			else if (post_id != null && category_id == null)
 			{
-				list = await _postServices.GetPosts(Int32.Parse(post_id)); 
+				list = await _postServices.GetPosts(Int32.Parse(post_id), null);
+			}
+			else if (post_id == null  || category_id != null)
+			{
+				list = await _postServices.GetPosts(null, Int32.Parse(category_id));
 			}
 			return Ok(list);
 		}
