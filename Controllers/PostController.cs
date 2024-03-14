@@ -10,7 +10,7 @@ namespace BlogHomeworkWebAPI.Controllers
 	public class PostController : ControllerBase
 	{
 		private IPostServices _postServices;
-		public PostController(IPostServices postServices) // TIÊM 
+		public PostController(IPostServices postServices)
 		{
 			_postServices = postServices;
 		}
@@ -34,6 +34,44 @@ namespace BlogHomeworkWebAPI.Controllers
 				list = await _postServices.GetPosts(null, Int32.Parse(category_id));
 			}
 			return Ok(list);
+		}
+
+		[HttpPost]
+		public async Task<ActionResult> Post_Create([FromBody] CreatePost post)
+		{
+			try
+			{
+				var returnData = new ReturnData();
+				if (post == null)
+				{
+					return BadRequest();
+				}
+
+				returnData = await _postServices.CreatePost(post);
+
+				return StatusCode(201);
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
+
+		[HttpPut("{post_id:int}")]
+		public async Task<ActionResult> Post_Update(int post_id, [FromBody] CreatePost post)
+		{
+			var returnData = new ReturnData();
+			returnData = await _postServices.UpdatePost(post_id, post);
+			return Ok(returnData);
+		}
+
+
+		[HttpDelete("{post_id:int}")]
+		public async Task<ActionResult> Post_Delete(int post_id)
+		{
+			var returnData = new ReturnData();
+			returnData = await _postServices.DeletePost(post_id);
+			return Ok(returnData);
 		}
 	}
 }
