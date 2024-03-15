@@ -9,10 +9,10 @@ namespace BlogHomeworkWebAPI.Controllers
 	[ApiController]
 	public class PostController : ControllerBase
 	{
-		private IPostServices _postServices;
-		public PostController(IPostServices postServices)
+		private IPostRepository _postRepository;
+		public PostController(IPostRepository postRepository)
 		{
-			_postServices = postServices;
+			_postRepository = postRepository;
 		}
 
 			
@@ -23,15 +23,15 @@ namespace BlogHomeworkWebAPI.Controllers
 			var list = new List<Post>();
 			if (post_id == null && category_id == null)
 			{
-				list = await _postServices.GetPosts(null, null);
+				list = await _postRepository.GetPosts(null, null);
 			}
 			else if (post_id != null && category_id == null)
 			{
-				list = await _postServices.GetPosts(Int32.Parse(post_id), null);
+				list = await _postRepository.GetPosts(Int32.Parse(post_id), null);
 			}
 			else if (post_id == null  || category_id != null)
 			{
-				list = await _postServices.GetPosts(null, Int32.Parse(category_id));
+				list = await _postRepository.GetPosts(null, Int32.Parse(category_id));
 			}
 			return Ok(list);
 		}
@@ -47,7 +47,7 @@ namespace BlogHomeworkWebAPI.Controllers
 					return BadRequest();
 				}
 
-				returnData = await _postServices.CreatePost(post);
+				returnData = await _postRepository.CreatePost(post);
 
 				return StatusCode(201);
 			}
@@ -61,7 +61,7 @@ namespace BlogHomeworkWebAPI.Controllers
 		public async Task<ActionResult> Post_Update(int post_id, [FromBody] CreatePost post)
 		{
 			var returnData = new ReturnData();
-			returnData = await _postServices.UpdatePost(post_id, post);
+			returnData = await _postRepository.UpdatePost(post_id, post);
 			return Ok(returnData);
 		}
 
@@ -70,7 +70,7 @@ namespace BlogHomeworkWebAPI.Controllers
 		public async Task<ActionResult> Post_Delete(int post_id)
 		{
 			var returnData = new ReturnData();
-			returnData = await _postServices.DeletePost(post_id);
+			returnData = await _postRepository.DeletePost(post_id);
 			return Ok(returnData);
 		}
 	}
