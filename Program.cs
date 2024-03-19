@@ -17,9 +17,9 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-// builder.Services.AddDbContext<BlogDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("ConnStr")));
-builder.Services.AddDbContext<BlogDbContext>(options =>
-	options.UseNpgsql(configuration.GetConnectionString("PsqlConnStr")));
+builder.Services.AddDbContext<BlogDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("ConnStr")));
+// builder.Services.AddDbContext<BlogDbContext>(options =>
+//	options.UseNpgsql(configuration.GetConnectionString("PsqlConnStr")));
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
 {
