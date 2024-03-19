@@ -1,4 +1,5 @@
-﻿using DataAccess.Blog.Entities;
+﻿using BlogHomeworkWebAPI.Filters;
+using DataAccess.Blog.Entities;
 using DataAccess.Blog.IServices;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -17,6 +18,7 @@ namespace BlogHomeworkWebAPI.Controllers
 
 			
 		[HttpGet()]
+		[BlogAuthorize()]
 		public async Task<ActionResult> Post_Getlist([FromQuery] string? post_id, [FromQuery] string? category_id)
 		{
 
