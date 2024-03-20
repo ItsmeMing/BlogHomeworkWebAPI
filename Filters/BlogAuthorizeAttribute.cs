@@ -17,7 +17,7 @@ namespace BlogHomeworkWebAPI.Filters
         public async Task OnAuthorizationAsync(AuthorizationFilterContext context)
         {
             var identity = context.HttpContext.User.Identity as ClaimsIdentity;
-            if (identity != null)
+            if (identity != null)   
             {
                 var userClaims = identity.Claims;
                 if (userClaims.Count() > 0)
