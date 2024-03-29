@@ -18,7 +18,7 @@ namespace BlogHomeworkWebAPI.Controllers
 
 			
 		[HttpGet()]
-		[BlogAuthorize()]
+		[BlogAuthorize("F1", "Get")]
 		public async Task<ActionResult> Post_Getlist([FromQuery] string? post_id, [FromQuery] string? category_id)
 		{
 
@@ -69,6 +69,7 @@ namespace BlogHomeworkWebAPI.Controllers
 
 
 		[HttpDelete("{post_id:int}")]
+		[BlogAuthorize("F2", "Delete")]
 		public async Task<ActionResult> Post_Delete(int post_id)
 		{
 			var returnData = new ReturnData();
